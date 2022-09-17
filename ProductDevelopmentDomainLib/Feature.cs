@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProductDevDomainLib
 {
+    /// <summary>
+    /// 完成した機能
+    /// </summary>
     internal class Feature
     {
         private string _id;

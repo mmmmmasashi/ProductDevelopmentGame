@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProductDevDomainLib
 {
+    /// <summary>
+    /// 機能の要求(未実装)
+    /// </summary>
     internal class FeatureRequest
     {
         public string Id { get; }

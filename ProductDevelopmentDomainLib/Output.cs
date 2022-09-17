@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ProductDevDomainLib
 {
+    /// <summary>
+    /// 開発チームのアウトプット
+    /// </summary>
     internal class Output
     {
         private List<Feature> features;

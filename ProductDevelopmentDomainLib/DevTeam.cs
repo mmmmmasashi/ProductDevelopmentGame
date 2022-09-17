@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProductDevDomainLib
 {
+    /// <summary>
+    /// 開発チーム
+    /// </summary>
     internal class DevTeam
     {
         private Queue<FeatureRequest> _featureRequests;
