@@ -11,10 +11,18 @@ namespace ProductDevDomainLibTestProj
     public class FeatureRequestTest
     {
         [Fact]
-        public void FeatureRequestを生成できる()
+        public void FeatureRequestはIDを持ち_完了するとFeatureになる()
         {
             var request = new FeatureRequest("some_id");
             Assert.Equal("some_id", request.Id);
+            Assert.Equal(new Feature("some_id"), request.Done());
+        }
+
+        [Fact]
+        public void FeatureRequestはストーリーポイントを持つ()
+        {
+            var request = new FeatureRequest("some_id", storyPoint:3);
+            Assert.Equal(3, request.StoryPoint);
         }
     }
 }
