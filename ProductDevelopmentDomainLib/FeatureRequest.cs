@@ -11,14 +11,14 @@ namespace ProductDevDomainLib
     /// </summary>
     internal class FeatureRequest
     {
-        public decimal StoryPoint { get; }
+        public Progress StoryPoint { get; }
 
         public string Id { get; }
 
-        public FeatureRequest(string id, decimal storyPoint = 1.0M)
+        public FeatureRequest(string id, Progress? storyPoint = null)
         {
             this.Id = id;
-            this.StoryPoint = storyPoint;
+            this.StoryPoint = storyPoint ?? new Progress(1);
         }
 
         internal Feature Done()
