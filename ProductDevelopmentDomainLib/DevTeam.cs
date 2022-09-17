@@ -12,16 +12,13 @@ namespace ProductDevDomainLib
     internal class DevTeam
     {
         private Queue<FeatureRequest> _featureRequests;
-        private readonly double _velocity;
-        private readonly double _errorRate;
+        private readonly Progress _velocity;
+        private readonly Rate _errorRate;
 
-        public DevTeam(double velocity = 1, double errorRate = 0)
+        public DevTeam(Progress? velocity = null, Rate? errorRate = null)
         {
-            if (velocity < 0) throw new ArgumentOutOfRangeException();
-            if (errorRate < 0 || 1 < errorRate) throw new ArgumentOutOfRangeException();
-
-            _velocity = velocity;
-            _errorRate = errorRate;
+            _velocity = velocity ?? new Progress(1.0M);
+            _errorRate = errorRate ?? new Rate(0);
             _featureRequests = new Queue<FeatureRequest>();
         }
 
