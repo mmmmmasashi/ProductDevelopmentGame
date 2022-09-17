@@ -24,9 +24,13 @@ namespace ProductDevDomainLib
 
         internal Output Work()
         {
+            var output = new Output();
+
             FeatureRequest request = _featureRequests.Dequeue();
             Feature feature = request.Done();
-            return new Output(new List<Feature>() { feature });
+            output.Add(feature);
+
+            return output;
         }
 
         internal void RequestFeature(FeatureRequest featureRequest)

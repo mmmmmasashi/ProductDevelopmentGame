@@ -15,10 +15,14 @@ namespace ProductDevDomainLib
         private List<Feature> features;
         public List<Feature> Features { get => features; }
 
-        public Output(List<Feature> features)
+        public Output()
         {
-            this.features = features;
+            features = new List<Feature>();
         }
 
+        internal void Add(Feature feature)
+        {
+            features.Add(feature);
+        }
     }
 }
