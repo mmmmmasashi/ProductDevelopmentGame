@@ -32,5 +32,15 @@ namespace ProductDevDomainLib
         {
             return HashCode.Combine(Value);
         }
+
+        internal Progress Add(Progress progressAdded)
+        {
+            return new Progress(this.Value + progressAdded.Value);
+        }
+
+        internal Progress Minus(Progress progressSub)
+        {
+            return new Progress(this.Value - progressSub.Value);
+        }
     }
 }

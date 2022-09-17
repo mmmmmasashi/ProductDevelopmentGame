@@ -25,5 +25,10 @@ namespace ProductDevDomainLib
         {
             return new Feature(this.Id);
         }
+
+        internal bool CanBeDone(Progress progress)
+        {
+            return (this.StoryPoint.Value <= progress.Value);
+        }
     }
 }
