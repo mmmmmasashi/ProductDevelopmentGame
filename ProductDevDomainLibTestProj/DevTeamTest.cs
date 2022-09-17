@@ -46,7 +46,7 @@ namespace ProductDevDomainLibTestProj
             team.RequestFeature(new FeatureRequest("ID1"));
             team.RequestFeature(new FeatureRequest("ID2"));
             team.RequestFeature(new FeatureRequest("ID3"));
-            team.RequestFeature(new FeatureRequest("ID4"));
+            team.RequestFeature(new FeatureRequest("ID4", new DevVolume(0.5M)));
 
             var features1 = team.Work().Features;
             Assert.Empty(features1);//éc0.7
@@ -59,6 +59,12 @@ namespace ProductDevDomainLibTestProj
 
             var features4 = team.Work().Features;
             Assert.Empty(features4);//0.1 + 0.7 = 0.8
+
+            var features5 = team.Work().Features;
+            Assert.Equal(2, features5.Count);//0.8 + 0.7 = 1.5 Ç±Ç±Ç≈ID4ÇÕ0.5Ç»ÇÃÇ≈ÅAíöìxÇ±Ç»ÇπÇÈÇÕÇ∏
+            Assert.Equal(new Feature("ID3"), features5[0]);
+            Assert.Equal(new Feature("ID4"), features5[1]);
+
         }
     }
 }
