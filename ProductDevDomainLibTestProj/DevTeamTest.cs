@@ -5,7 +5,7 @@ namespace ProductDevDomainLibTestProj
     public class DevTeamTest
     {
         [Fact]
-        public void Test1()
+        public void Velocity1‚Å1’PˆÊŠÔd–‚ğ‚·‚é‚ÆFeatureRequest‚ªFeature‚ÉŠ®¬‚µ‚Äo‚Ä‚­‚é()
         {
             double velocity = 1;
             double errorRate = 0;
