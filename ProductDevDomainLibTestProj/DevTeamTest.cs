@@ -37,5 +37,28 @@ namespace ProductDevDomainLibTestProj
             Assert.Equal(new Feature("ID2"), features[1]);
             Assert.Equal(new Feature("ID3"), features[2]);
         }
+
+        [Fact]
+        public void ベロシティが小数点の時に蓄積されること()
+        {
+            var team = new DevTeam(velocity: new Progress(0.7M), errorRate: new Rate(0));
+
+            team.RequestFeature(new FeatureRequest("ID1"));
+            team.RequestFeature(new FeatureRequest("ID2"));
+            team.RequestFeature(new FeatureRequest("ID3"));
+            team.RequestFeature(new FeatureRequest("ID4"));
+
+            var features1 = team.Work().Features;
+            Assert.Empty(features1);//残0.7
+
+            var features2 = team.Work().Features;
+            Assert.Equal(new Feature("ID1"), features2[0]);//1.4 -> 残0.4
+
+            var features3 = team.Work().Features;
+            Assert.Equal(new Feature("ID2"), features3[0]);//0.4+0.7=1.1 -> 残0.1
+
+            var features4 = team.Work().Features;
+            Assert.Empty(features4);//0.1 + 0.7 = 0.8
+        }
     }
 }
