@@ -15,8 +15,11 @@ namespace ProductDevDomainLib
         private readonly double _velocity;
         private readonly double _errorRate;
 
-        public DevTeam(double velocity, double errorRate)
+        public DevTeam(double velocity = 1, double errorRate = 0)
         {
+            if (velocity < 0) throw new ArgumentOutOfRangeException();
+            if (errorRate < 0 || 1 < errorRate) throw new ArgumentOutOfRangeException();
+
             _velocity = velocity;
             _errorRate = errorRate;
             _featureRequests = new Queue<FeatureRequest>();

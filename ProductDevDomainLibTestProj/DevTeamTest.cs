@@ -1,15 +1,28 @@
 using ProductDevDomainLib;
+using System;
+using Xunit;
 
 namespace ProductDevDomainLibTestProj
 {
     public class DevTeamTest
     {
         [Fact]
+        public void Velocity‚Í³()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new DevTeam(velocity: -0.1));
+        }
+
+        [Fact]
+        public void Error”­¶—¦‚Í0ˆÈã1ˆÈ‰º()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new DevTeam(errorRate: -0.01));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new DevTeam(errorRate: 1.01));
+        }
+
+        [Fact]
         public void Velocity1‚Å1’PˆÊŠÔd–‚ğ‚·‚é‚ÆFeatureRequest‚ªFeature‚ÉŠ®¬‚µ‚Äo‚Ä‚­‚é()
         {
-            double velocity = 1;
-            double errorRate = 0;
-            var team = new DevTeam(velocity, errorRate);
+            var team = new DevTeam(velocity: 1, errorRate: 0);
 
             team.RequestFeature(new FeatureRequest("SAMPLE_ID"));
 
