@@ -21,8 +21,8 @@ namespace ProductDevDomainLibTestProj
         [Fact]
         public void FeatureRequestはストーリーポイントを持つ()
         {
-            var request = new FeatureRequest("some_id", storyPoint:new Progress(3));
-            Assert.Equal(new Progress(3), request.StoryPoint);
+            var request = new FeatureRequest("some_id", storyPoint:new DevVolume(3));
+            Assert.Equal(new DevVolume(3), request.StoryPoint);
         }
     }
 }

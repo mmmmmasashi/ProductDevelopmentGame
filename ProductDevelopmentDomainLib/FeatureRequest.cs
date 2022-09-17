@@ -11,14 +11,14 @@ namespace ProductDevDomainLib
     /// </summary>
     internal class FeatureRequest
     {
-        public Progress StoryPoint { get; }
+        public DevVolume StoryPoint { get; }
 
         public string Id { get; }
 
-        public FeatureRequest(string id, Progress? storyPoint = null)
+        public FeatureRequest(string id, DevVolume? storyPoint = null)
         {
             this.Id = id;
-            this.StoryPoint = storyPoint ?? new Progress(1);
+            this.StoryPoint = storyPoint ?? new DevVolume(1);
         }
 
         internal Feature Done()
@@ -26,7 +26,7 @@ namespace ProductDevDomainLib
             return new Feature(this.Id);
         }
 
-        internal bool CanBeDone(Progress progress)
+        internal bool CanBeDone(DevVolume progress)
         {
             return (this.StoryPoint.Value <= progress.Value);
         }

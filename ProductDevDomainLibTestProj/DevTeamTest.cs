@@ -22,7 +22,7 @@ namespace ProductDevDomainLibTestProj
         [Fact]
         public void Velocity3で1単位時間仕事をすると3Point分のアウトプットを出してくる()
         {
-            var team = new DevTeam(velocity: new Progress(3), errorRate: new Rate(0));
+            var team = new DevTeam(velocity: new DevVolume(3), errorRate: new Rate(0));
             
             team.RequestFeature(new FeatureRequest("ID1"));
             team.RequestFeature(new FeatureRequest("ID2"));
@@ -41,7 +41,7 @@ namespace ProductDevDomainLibTestProj
         [Fact]
         public void ベロシティが小数点の時に蓄積されること()
         {
-            var team = new DevTeam(velocity: new Progress(0.7M), errorRate: new Rate(0));
+            var team = new DevTeam(velocity: new DevVolume(0.7M), errorRate: new Rate(0));
 
             team.RequestFeature(new FeatureRequest("ID1"));
             team.RequestFeature(new FeatureRequest("ID2"));

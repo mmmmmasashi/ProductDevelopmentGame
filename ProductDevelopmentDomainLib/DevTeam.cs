@@ -12,17 +12,17 @@ namespace ProductDevDomainLib
     internal class DevTeam
     {
         private Queue<FeatureRequest> _featureRequests;
-        private readonly Progress _velocity;
+        private readonly DevVolume _velocity;
         private readonly Rate _errorRate;
 
-        private Progress _progressLeft;//前回消費し切れていない進捗
+        private DevVolume _progressLeft;//前回消費し切れていない進捗
 
-        public DevTeam(Progress? velocity = null, Rate? errorRate = null)
+        public DevTeam(DevVolume? velocity = null, Rate? errorRate = null)
         {
-            _velocity = velocity ?? new Progress(1.0M);
+            _velocity = velocity ?? new DevVolume(1.0M);
             _errorRate = errorRate ?? new Rate(0);
             _featureRequests = new Queue<FeatureRequest>();
-            _progressLeft = new Progress(0);
+            _progressLeft = new DevVolume(0);
         }
 
         internal Output Work()

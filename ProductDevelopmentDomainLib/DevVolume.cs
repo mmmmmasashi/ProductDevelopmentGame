@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace ProductDevDomainLib
 {
     /// <summary>
-    /// 進捗
+    /// 開発ボリューム
     /// </summary>
     /// <remarks>
-    /// 単位としてはPt。ストーリーポイント, ベロシティがこれを単位とする
+    /// ストーリーポイント, ベロシティがこれを単位とする
     /// </remarks>
-    internal class Progress
+    internal class DevVolume
     {
         public decimal Value { get; }
 
-        public Progress(decimal value)
+        public DevVolume(decimal value)
         {
             if (value < 0) throw new ArgumentOutOfRangeException();
             Value = value;
@@ -24,7 +24,7 @@ namespace ProductDevDomainLib
 
         public override bool Equals(object? obj)
         {
-            return obj is Progress progress &&
+            return obj is DevVolume progress &&
                    Value == progress.Value;
         }
 
@@ -33,14 +33,14 @@ namespace ProductDevDomainLib
             return HashCode.Combine(Value);
         }
 
-        internal Progress Add(Progress progressAdded)
+        internal DevVolume Add(DevVolume progressAdded)
         {
-            return new Progress(this.Value + progressAdded.Value);
+            return new DevVolume(this.Value + progressAdded.Value);
         }
 
-        internal Progress Minus(Progress progressSub)
+        internal DevVolume Minus(DevVolume progressSub)
         {
-            return new Progress(this.Value - progressSub.Value);
+            return new DevVolume(this.Value - progressSub.Value);
         }
     }
 }
