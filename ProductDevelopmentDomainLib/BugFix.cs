@@ -6,22 +6,19 @@ using System.Threading.Tasks;
 
 namespace ProductDevDomainLib
 {
-    internal class BugFixRequest
+    internal class BugFix
     {
-        private readonly string _id;//対応するバグのID
-        public string Id { get => _id; }
-        public DevVolume Volume { get; }
+        private readonly string _id;
 
-        public BugFixRequest(string id, DevVolume? volume = null)
+        public BugFix(string id)
         {
             this._id = id;
-            Volume = volume ?? new DevVolume(1);
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is BugFixRequest request &&
-                   _id == request._id;
+            return obj is BugFix fix &&
+                   _id == fix._id;
         }
 
         public override int GetHashCode()

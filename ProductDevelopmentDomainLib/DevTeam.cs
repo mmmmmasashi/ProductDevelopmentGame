@@ -11,18 +11,28 @@ namespace ProductDevDomainLib
     /// </summary>
     internal class DevTeam
     {
-        private Queue<FeatureRequest> _featureRequests;
-        private readonly DevVolume _velocity;
-        private readonly EventRoulette _embugRoulette;
 
-        private DevVolume _progressLeft;//前回消費し切れていない進捗
+        private ITask? _wip = null;
+        private EventRoulette _embugRoulette;
+        private Queue<ITask> _taskQueue;
+
+        private List<Feature> _featureBuffer;
+        private List<BugFix> _bugFixBuffer;
+        private List<Bug> _bugBuffer;
+
+        private readonly DevVolume _velocity;
 
         public DevTeam(DevVolume? velocity = null, Rate? errorRate = null)
         {
             _velocity = velocity ?? new DevVolume(1.0M);
-            _embugRoulette = new EventRoulette(errorRate ?? new Rate(0));
-            _featureRequests = new Queue<FeatureRequest>();
-            _progressLeft = new DevVolume(0);
+            errorRate = errorRate ?? new Rate(0);
+            _embugRoulette = new EventRoulette(errorRate);
+
+            _taskQueue = new Queue<ITask>();
+
+            _featureBuffer = new List<Feature>();
+            _bugFixBuffer = new List<BugFix>();
+            _bugBuffer = new List<Bug>();
         }
 
         /// <summary>
@@ -31,40 +41,51 @@ namespace ProductDevDomainLib
         internal Output Work()
         {
             var output = new Output();
-            var progress = _velocity.Add(_progressLeft);
-
+            var devVolume = _velocity.Copy();
             //TODO:自然に考えると、仕掛かり品的な概念があって、途中までこなしたとするべき？
             //今はDevTeamが「余剰ポイント」として持っていてやや不自然。
-            while (_featureRequests.Any())
+            while (_wip != null || _taskQueue.Any())
             {
-                FeatureRequest request = _featureRequests.Peek();//削除してない点に注意
-                if (request.CanBeDone(progress))
+                if (devVolume.Value == 0) break;
+                ITask targetTask = _wip ?? _taskQueue.Dequeue();
+                
+                var consumedVolume = targetTask.WorkOn(devVolume);
+                devVolume = devVolume.Minus(consumedVolume);
+
+                if (targetTask.IsCompleted)
                 {
-                    _featureRequests.Dequeue();
+                    _wip = null;
 
-                    //機能と確率的にバグを出す
-                    output.Add(request.Done());
-
-                    if (_embugRoulette.IsEmbugged())
-                    {
-                        output.Add(request.CreateBug());
-                    }
-
-                    progress = progress.Minus(request.StoryPoint);
+                    if (_embugRoulette.IsEmbugged()) _bugBuffer.Add(new Bug());
                 }
                 else
                 {
-                    _progressLeft = progress;
-                    break;
+                    _wip = targetTask;
                 }
             }
 
+            return ExportOutput();
+        }
+
+        private Output ExportOutput()
+        {
+            var output = new Output(new List<Feature>(_featureBuffer), new List<Bug>(_bugBuffer), new List<BugFix>(_bugFixBuffer));
+            _featureBuffer.Clear();
+            _bugFixBuffer.Clear();
+            _bugBuffer.Clear();
             return output;
         }
 
         internal void RequestFeature(FeatureRequest featureRequest)
         {
-            _featureRequests.Enqueue(featureRequest);
+            ITask featureTask = new FeatureDevTask(featureRequest, (feature) => _featureBuffer.Add(feature));
+            _taskQueue.Enqueue(featureTask);
+        }
+
+        internal void RequestBugFix(BugFixRequest bugFixRequest)
+        {
+            ITask bugFixTask = new BugFixTask(bugFixRequest, (bugFix) => _bugFixBuffer.Add(bugFix));
+            _taskQueue.Enqueue(bugFixTask);
         }
     }
 }

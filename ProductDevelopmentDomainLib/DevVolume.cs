@@ -42,5 +42,10 @@ namespace ProductDevDomainLib
         {
             return new DevVolume(this.Value - progressSub.Value);
         }
+
+        internal DevVolume Copy()
+        {
+            return new DevVolume(this.Value);
+        }
     }
 }

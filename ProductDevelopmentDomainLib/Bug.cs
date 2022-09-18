@@ -12,10 +12,10 @@ namespace ProductDevDomainLib
         public Rate EventProbability { get; }//単位時間あたりのバグの市場発生確率
         public DevVolume VolumeToFix { get; }
 
-        public Bug(string id, Rate? rate = null, DevVolume? volumeToFix = null)
+        public Bug(string? id = null, Rate? rate = null, DevVolume? volumeToFix = null)
         {
             this.EventProbability = rate ?? new Rate(0.01);
-            this._id = id;
+            this._id = id ?? "ID1";// Guid.NewGuid().ToString();
             VolumeToFix = volumeToFix ?? new DevVolume(1);
         }
 

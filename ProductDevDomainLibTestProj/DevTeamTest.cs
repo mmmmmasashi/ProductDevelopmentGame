@@ -23,6 +23,18 @@ namespace ProductDevDomainLibTestProj
             Assert.Single(output.Features);
             Assert.Equal(new Feature("SAMPLE_ID"), output.Features[0]);
         }
+
+        [Fact]
+        public void ƒoƒOC³—v‹‚àó‚¯æ‚é‚±‚Æ‚ª‚Å‚«‚é()
+        {
+            team.RequestBugFix(new BugFixRequest("SAMPLE_ID"));
+
+            Output output = team.Work();
+
+            Assert.Single(output.BugFixes);
+            Assert.Equal(new BugFix("SAMPLE_ID"), output.BugFixes[0]);
+
+        }
     }
     public class DevTeamTest_Perfect_Velocity3
     {
