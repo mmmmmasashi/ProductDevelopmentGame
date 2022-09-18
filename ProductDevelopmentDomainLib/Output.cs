@@ -18,11 +18,10 @@ namespace ProductDevDomainLib
         private List<Bug> bugs;
         public List<Bug> Bugs { get => bugs; }
 
-        public Output()
+        public Output(List<Feature>? features = null,  List<Bug>? bugs = null)
         {
-            features = new List<Feature>();
-            bugs = new List<Bug>();
-
+            this.features = features ?? new List<Feature>();
+            this.bugs = bugs ?? new List<Bug>();
         }
 
         internal void Add(Feature feature)

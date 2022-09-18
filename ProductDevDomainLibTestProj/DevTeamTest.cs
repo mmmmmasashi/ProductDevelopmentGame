@@ -63,9 +63,7 @@ namespace ProductDevDomainLibTestProj
 
             var output5 = team.Work();
             
-            var output = new Output();
-            output.Add(new Feature("ID3"));
-            output.Add(new Feature("ID4"));
+            var output = new Output(new List<Feature>() { new Feature("ID3") , new Feature("ID4") });
             Assert.Equal(output, output5);
         }
 
@@ -77,10 +75,7 @@ namespace ProductDevDomainLibTestProj
 
             var output = terribleTeam.Work();
 
-            var expected = new Output();
-            expected.Add(new Feature("ID1"));
-            expected.Add(new Bug("ID1"));
-
+            var expected = new Output(new List<Feature>() { new Feature("ID1")}, new List<Bug>() { new Bug("ID1") });
             Assert.Equal(expected, output);
         }
     }
