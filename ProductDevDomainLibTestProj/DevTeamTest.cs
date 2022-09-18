@@ -1,3 +1,4 @@
+using Moq;
 using ProductDevDomainLib;
 using System;
 using Xunit;
@@ -106,7 +107,9 @@ namespace ProductDevDomainLibTestProj
 
         public DevTeamTest_エンバグ率100Percentチーム()
         {
-            terribleTeam = new DevTeam(velocity: new DevVolume(1), errorRate: new Rate(1));
+            var idFactory = new Mock<IIdFactory>();
+            idFactory.Setup(factory => factory.Create()).Returns("BUG1");
+            terribleTeam = new DevTeam(velocity: new DevVolume(1), errorRate: new Rate(1), idFactory:idFactory.Object);
         }
 
         [Fact]
@@ -116,7 +119,7 @@ namespace ProductDevDomainLibTestProj
 
             var output = terribleTeam.Work();
 
-            var expected = new Output(new List<Feature>() { new Feature("ID1") }, new List<Bug>() { new Bug("ID1") });
+            var expected = new Output(new List<Feature>() { new Feature("ID1") }, new List<Bug>() { new Bug("BUG1") });
             Assert.Equal(expected, output);
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,15 @@ namespace ProductDevDomainLib
         private List<Feature> _featureBuffer;
         private List<BugFix> _bugFixBuffer;
         private List<Bug> _bugBuffer;
-
+        private IIdFactory _idFactory;
         private readonly DevVolume _velocity;
 
-        public DevTeam(DevVolume? velocity = null, Rate? errorRate = null)
+        public DevTeam(DevVolume? velocity = null, Rate? errorRate = null, IIdFactory? idFactory = null)
         {
             _velocity = velocity ?? new DevVolume(1.0M);
             errorRate = errorRate ?? new Rate(0);
             _embugRoulette = new EventRoulette(errorRate);
+            _idFactory = idFactory ?? new RandomIdFactory();
 
             _taskQueue = new Queue<ITask>();
 
@@ -56,7 +58,7 @@ namespace ProductDevDomainLib
                 {
                     _wip = null;
 
-                    if (_embugRoulette.IsEmbugged()) _bugBuffer.Add(new Bug());
+                    if (_embugRoulette.IsEmbugged()) _bugBuffer.Add(new Bug(_idFactory.Create()));
                 }
                 else
                 {
