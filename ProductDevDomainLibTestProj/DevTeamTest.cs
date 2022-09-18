@@ -4,13 +4,18 @@ using Xunit;
 
 namespace ProductDevDomainLibTestProj
 {
-    public class DevTeamTest
+    public class DevTeamTest_Perfect
     {
+        private DevTeam team;
+
+        public DevTeamTest_Perfect()
+        {
+            team = new DevTeam(errorRate: new Rate(0));
+        }
+
         [Fact]
         public void Velocity1で1単位時間仕事をするとFeatureRequestがFeatureに完成して出てくる()
         {
-            var team = new DevTeam(errorRate: new Rate(0));
-
             team.RequestFeature(new FeatureRequest("SAMPLE_ID"));
 
             Output output = team.Work();
@@ -18,12 +23,19 @@ namespace ProductDevDomainLibTestProj
             Assert.Single(output.Features);
             Assert.Equal(new Feature("SAMPLE_ID"), output.Features[0]);
         }
+    }
+    public class DevTeamTest_Perfect_Velocity3
+    {
+        private DevTeam team;
+
+        public DevTeamTest_Perfect_Velocity3()
+        {
+            team = new DevTeam(velocity: new DevVolume(3), errorRate: new Rate(0));
+        }
 
         [Fact]
         public void Velocity3で1単位時間仕事をすると3Point分のアウトプットを出してくる()
         {
-            var team = new DevTeam(velocity: new DevVolume(3), errorRate: new Rate(0));
-            
             team.RequestFeature(new FeatureRequest("ID1"));
             team.RequestFeature(new FeatureRequest("ID2"));
             team.RequestFeature(new FeatureRequest("ID3"));
@@ -38,11 +50,19 @@ namespace ProductDevDomainLibTestProj
 
             Assert.Equal(expected, output);
         }
+    }
+
+    public class DevTeamTest_Perfect_Velocity小数点
+    {
+        private DevTeam team;
+        public DevTeamTest_Perfect_Velocity小数点()
+        {
+            team = new DevTeam(velocity: new DevVolume(0.7M), errorRate: new Rate(0));
+        }
 
         [Fact]
         public void ベロシティが小数点の時に蓄積されること()
         {
-            var team = new DevTeam(velocity: new DevVolume(0.7M), errorRate: new Rate(0));
 
             team.RequestFeature(new FeatureRequest("ID1"));
             team.RequestFeature(new FeatureRequest("ID2"));
@@ -66,16 +86,25 @@ namespace ProductDevDomainLibTestProj
             var output = new Output(new List<Feature>() { new Feature("ID3") , new Feature("ID4") });
             Assert.Equal(output, output5);
         }
+    }
+
+    public class DevTeamTest_エンバグ率100Percentチーム
+    {
+        DevTeam terribleTeam;
+
+        public DevTeamTest_エンバグ率100Percentチーム()
+        {
+            terribleTeam = new DevTeam(velocity: new DevVolume(1), errorRate: new Rate(1));
+        }
 
         [Fact]
         public void エラー発生率が100Percentの時は機能実装完了と同時にバグが生まれる()
         {
-            var terribleTeam = new DevTeam(velocity: new DevVolume(1), errorRate: new Rate(1));
             terribleTeam.RequestFeature(new FeatureRequest("ID1"));
 
             var output = terribleTeam.Work();
 
-            var expected = new Output(new List<Feature>() { new Feature("ID1")}, new List<Bug>() { new Bug("ID1") });
+            var expected = new Output(new List<Feature>() { new Feature("ID1") }, new List<Bug>() { new Bug("ID1") });
             Assert.Equal(expected, output);
         }
     }
