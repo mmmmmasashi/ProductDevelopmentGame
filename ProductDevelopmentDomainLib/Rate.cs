@@ -9,12 +9,14 @@ namespace ProductDevDomainLib
     internal class Rate
     {
         private readonly double _value;
+        public double Value { get => _value; }
 
         public Rate(double value)
         {
             if (value < 0 || 1 < value) throw new ArgumentOutOfRangeException();
             this._value = value;
         }
+
 
         public override bool Equals(object? obj)
         {

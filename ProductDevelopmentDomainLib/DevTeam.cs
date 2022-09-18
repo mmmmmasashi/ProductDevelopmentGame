@@ -14,6 +14,7 @@ namespace ProductDevDomainLib
         private Queue<FeatureRequest> _featureRequests;
         private readonly DevVolume _velocity;
         private readonly Rate _errorRate;
+        private readonly EmbugRoulette _roulette;
 
         private DevVolume _progressLeft;//前回消費し切れていない進捗
 
@@ -21,10 +22,14 @@ namespace ProductDevDomainLib
         {
             _velocity = velocity ?? new DevVolume(1.0M);
             _errorRate = errorRate ?? new Rate(0);
+            _roulette = new EmbugRoulette(_errorRate);
             _featureRequests = new Queue<FeatureRequest>();
             _progressLeft = new DevVolume(0);
         }
 
+        /// <summary>
+        /// 単位時間だけ仕事をしてアウトプットを出す
+        /// </summary>
         internal Output Work()
         {
             var output = new Output();
@@ -36,7 +41,15 @@ namespace ProductDevDomainLib
                 if (request.CanBeDone(progress))
                 {
                     _featureRequests.Dequeue();
+
+                    //機能と確率的にバグを出す
                     output.Add(request.Done());
+
+                    if (_roulette.IsEmbugged())
+                    {
+                        output.Add(request.CreateBug());
+                    }
+
                     progress = progress.Minus(request.StoryPoint);
                 }
                 else

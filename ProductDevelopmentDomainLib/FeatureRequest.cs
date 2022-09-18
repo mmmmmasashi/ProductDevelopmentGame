@@ -30,5 +30,10 @@ namespace ProductDevDomainLib
         {
             return (this.StoryPoint.Value <= progress.Value);
         }
+
+        internal Bug CreateBug()
+        {
+            return new Bug(this.Id);
+        }
     }
 }

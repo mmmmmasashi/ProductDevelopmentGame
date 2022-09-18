@@ -66,5 +66,20 @@ namespace ProductDevDomainLibTestProj
             Assert.Equal(new Feature("ID4"), features5[1]);
 
         }
+
+        [Fact]
+        public void エラー発生率が100Percentの時は機能実装完了と同時にバグが生まれる()
+        {
+            var terribleTeam = new DevTeam(velocity: new DevVolume(1), errorRate: new Rate(1));
+            terribleTeam.RequestFeature(new FeatureRequest("ID1"));
+
+            var output = terribleTeam.Work();
+
+            var expected = new Output();
+            expected.Add(new Feature("ID1"));
+            expected.Add(new Bug("ID1"));
+
+            Assert.Equal(expected, output);
+        }
     }
 }

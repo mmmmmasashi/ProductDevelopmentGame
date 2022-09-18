@@ -15,14 +15,38 @@ namespace ProductDevDomainLib
         private List<Feature> features;
         public List<Feature> Features { get => features; }
 
+        private List<Bug> bugs;
+        public List<Bug> Bugs { get => bugs; }
+
         public Output()
         {
             features = new List<Feature>();
+            bugs = new List<Bug>();
+
         }
 
         internal void Add(Feature feature)
         {
             features.Add(feature);
+        }
+
+        internal void Add(Bug bug)
+        {
+            bugs.Add(bug);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Output output &&
+                this.Features.Count() == output.Features.Count() &&
+                this.Bugs.Count() == output.Bugs.Count() &&
+                Enumerable.Range(0, this.Features.Count()).All(idx => this.Features[idx].Equals(output.Features[idx])) &&
+                Enumerable.Range(0, this.Bugs.Count()).All(idx => this.Bugs[idx].Equals(output.Bugs[idx]));
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Features, Bugs);
         }
     }
 }
