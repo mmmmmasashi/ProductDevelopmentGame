@@ -24,6 +24,11 @@ namespace ProductDevDomainLib
                    _id == bug._id;
         }
 
+        internal BugFixRequest ToFixRequest()
+        {
+            return new BugFixRequest(_id);
+        }
+
         public override int GetHashCode()
         {
             return HashCode.Combine(_id);
