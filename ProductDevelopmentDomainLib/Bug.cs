@@ -9,11 +9,14 @@ namespace ProductDevDomainLib
     internal class Bug
     {
         private readonly string _id;
+        public Rate EventProbability { get; }//単位時間あたりのバグの市場発生確率
 
-        public Bug(string id)
+        public Bug(string id, Rate? rate = null)
         {
+            this.EventProbability = rate ?? new Rate(0.01);
             this._id = id;
         }
+
 
         public override bool Equals(object? obj)
         {

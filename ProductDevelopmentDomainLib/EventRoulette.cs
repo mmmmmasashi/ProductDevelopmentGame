@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace ProductDevDomainLib
 {
-    internal class EmbugRoulette
+    /// <summary>
+    /// イベントの発生の抽選を行う
+    /// </summary>
+    internal class EventRoulette
     {
-        private readonly Rate _errorRate;
+        private readonly Rate _probability;
         private readonly Random _random;
 
-        public EmbugRoulette(Rate errorRate)
+        public EventRoulette(Rate probability)
         {
-            this._errorRate = errorRate;
+            this._probability = probability;
             this._random = new Random();
         }
 
         internal bool IsEmbugged()
         {
-            return _random.NextDouble() <= _errorRate.Value;
+            return _random.NextDouble() <= _probability.Value;
         }
     }
 }

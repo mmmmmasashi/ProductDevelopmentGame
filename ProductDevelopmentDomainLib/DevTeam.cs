@@ -13,14 +13,14 @@ namespace ProductDevDomainLib
     {
         private Queue<FeatureRequest> _featureRequests;
         private readonly DevVolume _velocity;
-        private readonly EmbugRoulette _roulette;
+        private readonly EventRoulette _embugRoulette;
 
         private DevVolume _progressLeft;//前回消費し切れていない進捗
 
         public DevTeam(DevVolume? velocity = null, Rate? errorRate = null)
         {
             _velocity = velocity ?? new DevVolume(1.0M);
-            _roulette = new EmbugRoulette(errorRate ?? new Rate(0));
+            _embugRoulette = new EventRoulette(errorRate ?? new Rate(0));
             _featureRequests = new Queue<FeatureRequest>();
             _progressLeft = new DevVolume(0);
         }
@@ -45,7 +45,7 @@ namespace ProductDevDomainLib
                     //機能と確率的にバグを出す
                     output.Add(request.Done());
 
-                    if (_roulette.IsEmbugged())
+                    if (_embugRoulette.IsEmbugged())
                     {
                         output.Add(request.CreateBug());
                     }
