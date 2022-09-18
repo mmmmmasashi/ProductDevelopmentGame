@@ -44,11 +44,12 @@ namespace ProductDevDomainLib
         {
             var output = new Output();
             var devVolume = _velocity.Copy();
-            //TODO:自然に考えると、仕掛かり品的な概念があって、途中までこなしたとするべき？
-            //今はDevTeamが「余剰ポイント」として持っていてやや不自然。
-            while (_wip != null || _taskQueue.Any())
+
+            while (true)
             {
+                if (_wip == null && !_taskQueue.Any()) break;
                 if (devVolume.Value == 0) break;
+
                 ITask targetTask = _wip ?? _taskQueue.Dequeue();
                 
                 var consumedVolume = targetTask.WorkOn(devVolume);
