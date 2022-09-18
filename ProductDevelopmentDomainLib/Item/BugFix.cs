@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Item
 {
     internal class BugFix
     {
@@ -12,7 +12,7 @@ namespace ProductDevDomainLib
 
         public BugFix(string id)
         {
-            this._id = id;
+            _id = id;
         }
 
         public override bool Equals(object? obj)

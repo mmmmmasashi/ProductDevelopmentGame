@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Item
 {
     /// <summary>
     /// 開発チームのアウトプット
@@ -19,11 +19,11 @@ namespace ProductDevDomainLib
         public List<Bug> Bugs { get => bugs; }
         public List<BugFix> BugFixes { get; }
 
-        public Output(List<Feature>? features = null,  List<Bug>? bugs = null, List<BugFix>? bugFixes = null)
+        public Output(List<Feature>? features = null, List<Bug>? bugs = null, List<BugFix>? bugFixes = null)
         {
             this.features = features ?? new List<Feature>();
             this.bugs = bugs ?? new List<Bug>();
-            this.BugFixes = bugFixes ?? new List<BugFix>();
+            BugFixes = bugFixes ?? new List<BugFix>();
         }
 
         internal void Add(Feature feature)
@@ -39,10 +39,10 @@ namespace ProductDevDomainLib
         public override bool Equals(object? obj)
         {
             return obj is Output output &&
-                this.Features.Count() == output.Features.Count() &&
-                this.Bugs.Count() == output.Bugs.Count() &&
-                Enumerable.Range(0, this.Features.Count()).All(idx => this.Features[idx].Equals(output.Features[idx])) &&
-                Enumerable.Range(0, this.Bugs.Count()).All(idx => this.Bugs[idx].Equals(output.Bugs[idx]));
+                Features.Count() == output.Features.Count() &&
+                Bugs.Count() == output.Bugs.Count() &&
+                Enumerable.Range(0, Features.Count()).All(idx => Features[idx].Equals(output.Features[idx])) &&
+                Enumerable.Range(0, Bugs.Count()).All(idx => Bugs[idx].Equals(output.Bugs[idx]));
         }
 
         public override int GetHashCode()

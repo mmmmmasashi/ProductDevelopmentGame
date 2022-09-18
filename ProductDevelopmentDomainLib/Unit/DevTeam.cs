@@ -1,11 +1,14 @@
 ﻿using Moq;
+using ProductDevDomainLib.Item;
+using ProductDevDomainLib.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProductDevDomainLib.Val;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Unit
 {
     /// <summary>
     /// 開発チーム

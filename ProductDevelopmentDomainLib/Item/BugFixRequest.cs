@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ProductDevDomainLib.Val;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Item
 {
     internal class BugFixRequest
     {
@@ -14,7 +15,7 @@ namespace ProductDevDomainLib
 
         public BugFixRequest(string id, DevVolume? volume = null)
         {
-            this._id = id;
+            _id = id;
             Volume = volume ?? new DevVolume(1);
         }
 

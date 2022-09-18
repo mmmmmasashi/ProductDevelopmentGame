@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Val
 {
     internal class Rate
     {
@@ -14,7 +14,7 @@ namespace ProductDevDomainLib
         public Rate(double value)
         {
             if (value < 0 || 1 < value) throw new ArgumentOutOfRangeException();
-            this._value = value;
+            _value = value;
         }
 
 

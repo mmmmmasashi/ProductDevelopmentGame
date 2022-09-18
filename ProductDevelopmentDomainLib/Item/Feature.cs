@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Item
 {
     /// <summary>
     /// 完成した機能
@@ -15,7 +15,7 @@ namespace ProductDevDomainLib
 
         public Feature(string id)
         {
-            this._id = id;
+            _id = id;
         }
 
         public override bool Equals(object? obj)

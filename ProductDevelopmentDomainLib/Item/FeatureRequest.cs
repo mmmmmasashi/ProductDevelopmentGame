@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ProductDevDomainLib.Val;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Item
 {
     /// <summary>
     /// 機能の要求(未実装)
@@ -17,23 +18,23 @@ namespace ProductDevDomainLib
 
         public FeatureRequest(string id, DevVolume? storyPoint = null)
         {
-            this.Id = id;
-            this.StoryPoint = storyPoint ?? new DevVolume(1);
+            Id = id;
+            StoryPoint = storyPoint ?? new DevVolume(1);
         }
 
         internal Feature Done()
         {
-            return new Feature(this.Id);
+            return new Feature(Id);
         }
 
         internal bool CanBeDone(DevVolume progress)
         {
-            return (this.StoryPoint.Value <= progress.Value);
+            return StoryPoint.Value <= progress.Value;
         }
 
         internal Bug CreateBug()
         {
-            return new Bug(this.Id);
+            return new Bug(Id);
         }
     }
 }

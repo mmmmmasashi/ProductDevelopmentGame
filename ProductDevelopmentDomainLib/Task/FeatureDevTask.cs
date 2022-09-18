@@ -1,10 +1,13 @@
-﻿using System;
+﻿using ProductDevDomainLib.Item;
+using ProductDevDomainLib.Val;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Task
 {
     internal class FeatureDevTask : ITask
     {
@@ -19,7 +22,7 @@ namespace ProductDevDomainLib
         {
             this.featureRequest = featureRequest;
             this.outputAction = outputAction;
-            this.VolumeNeeded = featureRequest.StoryPoint;
+            VolumeNeeded = featureRequest.StoryPoint;
         }
 
         public void WorkOn(DevVolume volumeToConsume)

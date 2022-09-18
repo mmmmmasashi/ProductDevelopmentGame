@@ -1,5 +1,7 @@
 using Moq;
-using ProductDevDomainLib;
+using ProductDevDomainLib.Item;
+using ProductDevDomainLib.Unit;
+using ProductDevDomainLib.Val;
 using System;
 using Xunit;
 

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ProductDevDomainLib.Val;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Item
 {
     internal class Bug
     {
@@ -14,8 +15,8 @@ namespace ProductDevDomainLib
 
         public Bug(string id, Rate? rate = null, DevVolume? volumeToFix = null)
         {
-            this.EventProbability = rate ?? new Rate(0.01);
-            this._id = id;
+            EventProbability = rate ?? new Rate(0.01);
+            _id = id;
             VolumeToFix = volumeToFix ?? new DevVolume(1);
         }
 

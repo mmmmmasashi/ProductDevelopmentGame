@@ -1,4 +1,6 @@
 ﻿using ProductDevDomainLib;
+using ProductDevDomainLib.Item;
+using ProductDevDomainLib.Val;
 using System;
 using System.Collections.Generic;
 using System.Linq;

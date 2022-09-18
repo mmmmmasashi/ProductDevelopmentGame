@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductDevDomainLib
+namespace ProductDevDomainLib.Val
 {
     /// <summary>
     /// 開発ボリューム
@@ -35,17 +35,17 @@ namespace ProductDevDomainLib
 
         internal DevVolume Add(DevVolume progressAdded)
         {
-            return new DevVolume(this.Value + progressAdded.Value);
+            return new DevVolume(Value + progressAdded.Value);
         }
 
         internal DevVolume Minus(DevVolume progressSub)
         {
-            return new DevVolume(this.Value - progressSub.Value);
+            return new DevVolume(Value - progressSub.Value);
         }
 
         internal DevVolume Copy()
         {
-            return new DevVolume(this.Value);
+            return new DevVolume(Value);
         }
     }
 }
