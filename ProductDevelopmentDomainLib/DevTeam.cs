@@ -51,14 +51,16 @@ namespace ProductDevDomainLib
                 if (devVolume.Value == 0) break;
 
                 ITask targetTask = _wip ?? _taskQueue.Dequeue();
-                
-                var consumedVolume = targetTask.WorkOn(devVolume);
-                devVolume = devVolume.Minus(consumedVolume);
+
+                bool canFinish = targetTask.VolumeNeeded.Value <= devVolume.Value;
+                DevVolume volumeToConsume = canFinish ? targetTask.VolumeNeeded : devVolume;
+
+                targetTask.WorkOn(volumeToConsume);
+                devVolume = devVolume.Minus(volumeToConsume);
 
                 if (targetTask.IsCompleted)
                 {
                     _wip = null;
-
                     if (_embugRoulette.IsEmbugged()) _bugBuffer.Add(new Bug(_idFactory.Create()));
                 }
                 else

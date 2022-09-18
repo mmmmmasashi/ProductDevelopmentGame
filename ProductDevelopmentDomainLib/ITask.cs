@@ -8,7 +8,8 @@ namespace ProductDevDomainLib
 {
     internal interface ITask
     {
+        DevVolume VolumeNeeded { get; }
         bool IsCompleted { get; }
-        DevVolume WorkOn(DevVolume volumeCanConsume);//消費可能な最大Volumeを入力し、実際に消費されたVolumeをReturnする
+        void WorkOn(DevVolume volumeCanConsume);//消費可能な最大Volumeを入力し、実際に消費されたVolumeをReturnする
     }
 }

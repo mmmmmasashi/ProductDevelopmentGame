@@ -10,30 +10,23 @@ namespace ProductDevDomainLib
     {
         private readonly FeatureRequest featureRequest;
         private readonly Action<Feature> outputAction;
-        private DevVolume _volumeNeededToComplete;
+
+        public bool IsCompleted { get => VolumeNeeded.Value == 0; }
+
+        public DevVolume VolumeNeeded { get; private set; }
 
         public FeatureDevTask(FeatureRequest featureRequest, Action<Feature> outputAction)
         {
             this.featureRequest = featureRequest;
             this.outputAction = outputAction;
-            this._volumeNeededToComplete = featureRequest.StoryPoint;
+            this.VolumeNeeded = featureRequest.StoryPoint;
         }
 
-        public bool IsCompleted { get; private set; } = false;
-
-        public DevVolume WorkOn(DevVolume volumeCanConsume)
+        public void WorkOn(DevVolume volumeToConsume)
         {
-            if (_volumeNeededToComplete.Value <= volumeCanConsume.Value)
-            {
-                outputAction(new Feature(featureRequest.Id));
-                IsCompleted = true;
-                return _volumeNeededToComplete;
-            }
-            else
-            {
-                _volumeNeededToComplete = _volumeNeededToComplete.Minus(volumeCanConsume);
-                return volumeCanConsume;
-            }
+            if (VolumeNeeded.Value < volumeToConsume.Value) throw new ArgumentException();
+            VolumeNeeded = VolumeNeeded.Minus(volumeToConsume);
+            if (IsCompleted) outputAction(new Feature(featureRequest.Id));
         }
     }
 }
