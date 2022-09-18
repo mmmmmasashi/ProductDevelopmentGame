@@ -9,10 +9,12 @@ namespace ProductDevDomainLib
     internal class BugFixRequest
     {
         private readonly string _id;//対応するバグのID
+        public DevVolume Volume { get; }
 
-        public BugFixRequest(string id)
+        public BugFixRequest(string id, DevVolume? volume = null)
         {
             this._id = id;
+            Volume = volume ?? new DevVolume(1);
         }
 
         public override bool Equals(object? obj)
