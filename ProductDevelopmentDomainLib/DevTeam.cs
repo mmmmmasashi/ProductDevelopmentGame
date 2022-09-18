@@ -13,7 +13,6 @@ namespace ProductDevDomainLib
     {
         private Queue<FeatureRequest> _featureRequests;
         private readonly DevVolume _velocity;
-        private readonly Rate _errorRate;
         private readonly EmbugRoulette _roulette;
 
         private DevVolume _progressLeft;//前回消費し切れていない進捗
@@ -21,8 +20,7 @@ namespace ProductDevDomainLib
         public DevTeam(DevVolume? velocity = null, Rate? errorRate = null)
         {
             _velocity = velocity ?? new DevVolume(1.0M);
-            _errorRate = errorRate ?? new Rate(0);
-            _roulette = new EmbugRoulette(_errorRate);
+            _roulette = new EmbugRoulette(errorRate ?? new Rate(0));
             _featureRequests = new Queue<FeatureRequest>();
             _progressLeft = new DevVolume(0);
         }
