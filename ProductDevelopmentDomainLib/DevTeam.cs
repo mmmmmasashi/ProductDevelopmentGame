@@ -33,6 +33,8 @@ namespace ProductDevDomainLib
             var output = new Output();
             var progress = _velocity.Add(_progressLeft);
 
+            //TODO:自然に考えると、仕掛かり品的な概念があって、途中までこなしたとするべき？
+            //今はDevTeamが「余剰ポイント」として持っていてやや不自然。
             while (_featureRequests.Any())
             {
                 FeatureRequest request = _featureRequests.Peek();//削除してない点に注意
