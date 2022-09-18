@@ -31,11 +31,12 @@ namespace ProductDevDomainLibTestProj
 
             var output = team.Work();
 
-            var features = output.Features;
-            Assert.Equal(3, features.Count());
-            Assert.Equal(new Feature("ID1"), features[0]);
-            Assert.Equal(new Feature("ID2"), features[1]);
-            Assert.Equal(new Feature("ID3"), features[2]);
+            var expected = new Output();
+            expected.Add(new Feature("ID1"));
+            expected.Add(new Feature("ID2"));
+            expected.Add(new Feature("ID3"));
+
+            Assert.Equal(expected, output);
         }
 
         [Fact]
@@ -60,11 +61,12 @@ namespace ProductDevDomainLibTestProj
             var features4 = team.Work().Features;
             Assert.Empty(features4);//0.1 + 0.7 = 0.8
 
-            var features5 = team.Work().Features;
-            Assert.Equal(2, features5.Count);//0.8 + 0.7 = 1.5 Ç±Ç±Ç≈ID4ÇÕ0.5Ç»ÇÃÇ≈ÅAíöìxÇ±Ç»ÇπÇÈÇÕÇ∏
-            Assert.Equal(new Feature("ID3"), features5[0]);
-            Assert.Equal(new Feature("ID4"), features5[1]);
-
+            var output5 = team.Work();
+            
+            var output = new Output();
+            output.Add(new Feature("ID3"));
+            output.Add(new Feature("ID4"));
+            Assert.Equal(output, output5);
         }
 
         [Fact]
