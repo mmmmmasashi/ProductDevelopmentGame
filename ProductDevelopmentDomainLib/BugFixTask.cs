@@ -18,7 +18,6 @@ namespace ProductDevDomainLib
             this.bugFixRequest = bugFixRequest;
             this.outputAction = outputAction;
             VolumeNeeded = bugFixRequest.Volume;
-
         }
 
         public void WorkOn(DevVolume volumeToConsume)
